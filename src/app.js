@@ -1,11 +1,14 @@
 import React from "react";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
+import { AuthenticatedRoute } from "./customRoutes/ProtectedRoutes";
 import ChangePassword from "./components/auth/ChangePassword";
 import PasswordReset from "./components/auth/PasswordRest";
 import Register from "./components/auth/Register";
+import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
 import Login from "./components/auth/Login";
 import { history } from "./index";
+
 
 function App() {
 
@@ -15,8 +18,8 @@ function App() {
                 <Navigation />
                 <Switch>
                     <Route exact path="/" component={HomePage} />
-                    <Route exact path="/login" component={Login} />
-                    <Route exact path="/register" component={Register} />
+                    <AuthenticatedRoute exact path="/login" component={Login} />
+                    <AuthenticatedRoute exact path="/register" component={Register} />
                     <Route exact path="/signout" render={() => <Redirect to="/" />} />
                     <Route exact path="/changepassword" component={ChangePassword} />
                     <Route exact path="/passwordreset" component={PasswordReset} />
