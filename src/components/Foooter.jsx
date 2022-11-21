@@ -16,7 +16,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             target="_blank"
           >
-            Mateo
+            {" "}Mateo
           </a>
           , The challenge
         </p>
