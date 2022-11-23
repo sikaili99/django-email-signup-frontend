@@ -1,19 +1,16 @@
-import axios from "axios";
 import React, { useEffect } from "react";
+import { useNavigate} from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUsers } from "../actions/users/listUsers";
 import CustomLoader from "./loader";
 
 const UserCards = () => {
-
   const  { users, loading } = useSelector((state) => state.users);
+  let navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const handleUserDelete = (id) => {
-    dispatch(deteleUser(id));
-  };
-
-  const handleUserDetails = (id) => {
     dispatch(deteleUser(id));
   };
 
@@ -36,27 +33,27 @@ const UserCards = () => {
         <CustomLoader loading={loading}>
         <div className="row">
           {users.map(data => (
-            <div className="col-md-4 animated fadeIn" key={data.id.value}>
+            <div className="col-md-4 animated fadeIn" key={data.id.value} style={{cursor: "default"}}>
               <div className="card">
-                <div className="card-body">
+                <div className="card-body" onClick={()=>{navigate(`/profile/`)}}>
                   <div className="avatar">
                     <img
-                      src={data.picture.large}
+                      src={data?.picture?.large}
                       className="card-img-top"
                       alt=""
                     />
                   </div>
                   <h5 className="card-title">
-                    {uppercase(data.name.first) +
+                    {uppercase(data?.name?.first) +
                       " " +
-                      uppercase(data.name.last)}
+                      uppercase(data?.name?.last)}
                   </h5>
                   <p className="card-text">
-                    {data.location.city +
+                    {data?.location?.city +
                       ", " +
-                      uppercase(data.location.state)}
+                      uppercase(data?.location?.state)}
                     <br />
-                    <span className="phone">{data.phone}</span>
+                    <span className="phone">{data?.phone}</span>
                   </p>
                 </div>
               </div>

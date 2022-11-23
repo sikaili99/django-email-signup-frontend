@@ -3,26 +3,24 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction, authenticateAction } from '../../actions/auth/authActions';
-
+import CustomLoader from '../loader';
 
 const Login = () => {
-
+  const { loading } = useSelector(state=>state.auth);
   let navigate = useNavigate();
   let location = useLocation();
   const dispatch = useDispatch();
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
   const onSubmit = data => {
-
     dispatch(loginAction(data)).then(response => {
-
-      authenticateAction(response,useDispatch,location,navigate)
-
+      dispatch(authenticateAction(response.data,dispatch,location,navigate));
     })
 
   };
   return (
       <div className="Auth-form-container">
+        <CustomLoader loading={loading}>
         <form className="Auth-form" onSubmit={handleSubmit(onSubmit)}>
           <div className="Auth-form-content">
             <h3 className="Auth-form-title">Sign In</h3>
@@ -35,8 +33,8 @@ const Login = () => {
             <div className="form-group mt-3">
               <label>Email address</label>
               <input
-                {...register("email")}
-                type="email"
+                {...register("phonenumber")}
+                type="text"
                 className="form-control mt-1"
                 placeholder="Enter email"
               />
@@ -60,6 +58,7 @@ const Login = () => {
             </p>
           </div>
         </form>
+        </CustomLoader>
       </div>
     )
 }

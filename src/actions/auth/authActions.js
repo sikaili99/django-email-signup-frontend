@@ -1,53 +1,35 @@
 import * as types from "../../types/actionTypes";
-import { backendUrl } from "../backendUrl";
-import axios from 'axios';
-
-let url = process.env.REACT_APP_DEV_URL || backendUrl;
+import axiosInstance from "../../services";
+import { message } from "antd";
 
 function authenticateAction(userData, dispatch, location, navigate) {
-  console.log(userData);
   return async function() {
     if (navigator.cookieEnabled) {
-      localStorage.setItem("access_token", userData.token);
+      if (userData?.access){
+        localStorage.setItem("access_token", userData?.access);
+      }  
     }
-
-    if (location === "/login") {
+    if (location.pathname == "/login") {
       navigate("/");
     }
-    return dispatch({ type: types.AUTHENTICATED });
-  };
-}
-function registrationSuccessMessage() {
-  return { type: types.REGISTRATION_SUCCESS_MESSAGE };
-}
-
-function registerAction(data) {
-  return async function() {
-    let response = await axios.post(`${url}/auth/users/create/`, {
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-      body: JSON.stringify(data)
-    });
-    let responseJson = response.json();
-    return responseJson;
+    dispatch({ type: types.AUTHENTICATED });
   };
 }
 
-function loginAction(data) {
-  console.log({data});
-  return async function() {
-    let response = await axios.post(`${url}/auth/api/v1/token/obtain/`, {
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-      },
-      body: JSON.stringify(data)
-    });
-    let responseJson = await response.json();
-    return responseJson;
-  };
+const loginAction = (data) => async (dispatch) => {
+  try {
+    dispatch({ type: types.AUTHENTICATED_REQUEST });
+    let response = await axiosInstance.post('/auth/v1/api/token/',JSON.stringify(data));
+    dispatch({type: types.AUTHENTICATED })
+    return response
+} catch (err) {
+  dispatch({ type: types.AUTHENTICATED_FAILURE });
+  if (err.response) {
+    message.error(err.response.data.message);
+  } else if (err.request) {
+    message.error(err.message);
+  }
+}
 }
 
 // JWT tokens are not stored in our DB
@@ -57,9 +39,7 @@ function logoutAction() {
 }
 
 export {
-  registerAction,
   loginAction,
   authenticateAction,
-  logoutAction,
-  registrationSuccessMessage
+  logoutAction
 };

@@ -2,20 +2,22 @@ import * as types from "../../types/actionTypes";
 
 const initialState = {
   authenticated: false,
-  isLoading: false,
-  registration_message: ""
+  loading: false,
 };
-
-const registration_message = "You have been registered successfully.";
 
 function authReducer(state = initialState, action) {
   switch (action.type) {
+    case types.AUTHENTICATED_REQUEST:
+      return {
+        ...state,
+        loading: true
+      };
     case types.AUTHENTICATED:
-      return { authenticated: true, registration_message: "" };
+      return {...state, authenticated: true, loading: false};
     case types.UNAUTHENTICATED:
-      return { authenticated: false, registration_message: "" };
-    case types.REGISTRATION_SUCCESS_MESSAGE:
-      return { ...state, registration_message: registration_message };
+      return {...state, authenticated: false, loading: false};
+    case types.AUTHENTICATED_FAILURE:
+        return {...state, authenticated: false, loading: false};
     default:
       return state;
   }

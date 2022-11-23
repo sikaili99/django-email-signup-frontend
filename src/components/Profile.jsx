@@ -44,7 +44,7 @@ function Account({ id }) {
   return (
     <Paper className={classes.paper}>
       <Grid container spacing={6}>
-        <Grid item xs={12} container justify="flex-start">
+        <Grid item xs={12} container justifyContent="flex-start">
           <Typography variant="h4">Account Info</Typography>
         </Grid>
         <Grid item xs={12} container>
@@ -94,7 +94,7 @@ function PasswordMgmt({ id }) {
   return (
     <Paper className={classes.paper}>
       <Grid container direction="column" spacing={4}>
-        <Grid container justify="flex-start">
+        <Grid container justifyContent="flex-start">
           <Typography variant="h4">Password Mangement</Typography>
         </Grid>
         <Grid item>
@@ -125,7 +125,7 @@ function PasswordMgmt({ id }) {
             fullWidth
           />
         </Grid>
-        <Grid container justify="flex-end">
+        <Grid container justifyContent="flex-end">
           <Button disabled={submittable} variant="contained" color="primary">
             Submit
           </Button>
@@ -134,6 +134,7 @@ function PasswordMgmt({ id }) {
     </Paper>
   );
 }
+
 export default function Profile({ id = sampleAccount }) {
   const [profileImg, setprofileImg] = useState(id.image);
   const [name, setName] = useState(id.name);
@@ -141,7 +142,7 @@ export default function Profile({ id = sampleAccount }) {
   const [edited, setEdited] = useState(false);
   const classes = useStyles();
   return (
-    <Grid container direction="column" justify="center" spacing={5}>
+    <Grid container direction="column" justifyContent="center" spacing={5}>
       <Grid item>
         <Account id={id} />
       </Grid>

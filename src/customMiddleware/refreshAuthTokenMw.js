@@ -11,6 +11,7 @@ function refreshAuthToken({ dispatch, getState }) {
   return next => action => {
     if (typeof action === "function") {
       if (localStorage.getItem("access_token") && localStorage.length > 0) {
+        console.log("here....");
         const tokenExpiration = jwtDecode(localStorage.getItem("access_token"))
           .exp;
         const currentTime = Math.round(new Date().getTime() / 1000);
@@ -24,7 +25,7 @@ function refreshAuthToken({ dispatch, getState }) {
           return next(action);
         }
         if (tokenExpiration && timeLeft <= 1800) {
-          return fetch(`${url}/auth/api/v1/refresh/`, {
+          return fetch(`${url}/auth/v1/api/refresh/`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

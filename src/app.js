@@ -8,10 +8,9 @@ import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
 import Login from "./components/auth/Login";
 import { history } from "./index";
+import Profile from "./components/Profile";
 
-
-function App() {
-
+const App = () => {
     return (
         <Router history={history}>
             <div>
@@ -20,6 +19,7 @@ function App() {
                     <Route exact path="/" element={<HomePage />} />
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path="/register" element={<Register />} />
+                    <Route exact path="/profile" element={<Profile />} />
                     <Route exact path="/signout" render={() => <Navigate to="/" />} />
                     <Route exact path="/changepassword" element={<PrivateRoute><ChangePassword /></PrivateRoute>} />
                     <Route exact path="/passwordreset" element={<PasswordReset />} />
@@ -28,5 +28,4 @@ function App() {
     </Router>
     )
 }
-
 export default App;
