@@ -1,21 +1,47 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUsers } from "../actions/users/listUsers";
+import CustomLoader from "./loader";
 
 const UserCards = () => {
-    let data = []
-    const loadMore = () =>{
-        // API call
-    }
+
+  const  { users, loading } = useSelector((state) => state.users);
+  const dispatch = useDispatch();
+
+  const handleUserDelete = (id) => {
+    dispatch(deteleUser(id));
+  };
+
+  const handleUserDetails = (id) => {
+    dispatch(deteleUser(id));
+  };
+
+  useEffect(() => {
+    dispatch(fetchUsers())
+  }, [dispatch])
+
+
+  const uppercase = word => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  };
+
+
+  const loadMore = () => {
+    dispatch(fetchUsers);
+  };
+
     return (
       <div className="clearfix">
+        <CustomLoader loading={loading}>
         <div className="row">
-          {data.map(data => (
-            <div className="col-md-4 animated fadeIn" key={data.id}>
+          {users.map(data => (
+            <div className="col-md-4 animated fadeIn" key={data.id.value}>
               <div className="card">
                 <div className="card-body">
                   <div className="avatar">
                     <img
-                      src={data.profile.picture}
+                      src={data.picture.large}
                       className="card-img-top"
                       alt=""
                     />
@@ -26,7 +52,10 @@ const UserCards = () => {
                       uppercase(data.name.last)}
                   </h5>
                   <p className="card-text">
-         
+                    {data.location.city +
+                      ", " +
+                      uppercase(data.location.state)}
+                    <br />
                     <span className="phone">{data.phone}</span>
                   </p>
                 </div>
@@ -34,14 +63,16 @@ const UserCards = () => {
             </div>
           ))}
         </div>
-        <button
+        {!loading && <button
           className="btn btn-light btn-block w-50 mx-auto"
           onClick={e => {
             loadMore();
           }}
         >
           Load More Users
-        </button>
+        </button>}
+    
+        </CustomLoader>
       </div>
     );
   }
