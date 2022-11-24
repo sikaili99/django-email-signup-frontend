@@ -13,18 +13,16 @@ import Profile from "./components/Profile";
 const App = () => {
     return (
         <Router history={history}>
-            <div>
-                <Navigation />
-                <Routes>
-                    <Route exact path="/" element={<HomePage />} />
-                    <Route exact path="/login" element={<Login />} />
-                    <Route exact path="/register" element={<Register />} />
-                    <Route exact path="/profile" element={<Profile />} />
-                    <Route exact path="/signout" render={() => <Navigate to="/" />} />
-                    <Route exact path="/changepassword" element={<PrivateRoute><ChangePassword /></PrivateRoute>} />
-                    <Route exact path="/passwordreset" element={<PasswordReset />} />
-                </Routes>
-            </div>
+            <Navigation />
+            <Routes>
+                <Route exact path="/" element={<PrivateRoute><HomePage /></PrivateRoute>} />
+                <Route exact path="/login" element={<Login />} />
+                <Route exact path="/register" element={<Register />} />
+                <Route exact path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+                <Route exact path="/signout" render={() => <Navigate to="/" />} />
+                <Route exact path="/changepassword" element={<PrivateRoute><ChangePassword /></PrivateRoute>} />
+                <Route exact path="/passwordreset" element={<PasswordReset />} />
+            </Routes>
     </Router>
     )
 }

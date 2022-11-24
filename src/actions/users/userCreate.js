@@ -1,6 +1,6 @@
 import { message } from "antd";
 import * as types from "../../types/actionTypes";
-import axiosInstance from "../../services";
+import { axiosInstance } from "../../services";
 
 export function createUserRequest() {
     return { type: types.CREATE_USER_REQUEST };

@@ -9,4 +9,12 @@ const axiosInstance = axios.create({
   }
 });
 
-export default axiosInstance;
+const checkAuth = () => {
+  const token = localStorage.getItem("access_token");
+  if (!token) {
+    return false;
+  }
+  return true;
+};
+
+export { axiosInstance, checkAuth };

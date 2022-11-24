@@ -1,5 +1,5 @@
 import * as types from "../../types/actionTypes";
-import axiosInstance from "../../services";
+import { axiosInstance } from "../../services";
 import { message } from "antd";
 
 function authenticateAction(userData, dispatch, location, navigate) {
@@ -33,8 +33,9 @@ const loginAction = (data) => async (dispatch) => {
 }
 
 // JWT tokens are not stored in our DB
-function logoutAction() {
+const logoutAction = (navigate) => {
   localStorage.removeItem("access_token");
+  navigate('/login');
   return { type: types.UNAUTHENTICATED };
 }
 
