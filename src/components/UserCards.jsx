@@ -7,7 +7,7 @@ import CustomLoader from "./loader";
 const UserCards = () => {
   const  { users, loading } = useSelector((state) => state.users);
   let navigate = useNavigate();
-
+  console.log({users});
   const dispatch = useDispatch();
 
   const handleUserDelete = (id) => {
@@ -32,8 +32,8 @@ const UserCards = () => {
       <div className="clearfix">
         <CustomLoader loading={loading}>
         <div className="row">
-          {users.map(data => (
-            <div className="col-md-4 animated fadeIn" key={data.id.value} style={{cursor: "default"}}>
+          {users?.map(data => (
+            <div className="col-md-4 animated fadeIn" key={data?.id} style={{cursor: "default"}}>
               <div className="card">
                 <div className="card-body" onClick={()=>{navigate(`/profile/`)}}>
                   <div className="avatar">
@@ -44,16 +44,13 @@ const UserCards = () => {
                     />
                   </div>
                   <h5 className="card-title">
-                    {uppercase(data?.name?.first) +
+                    {uppercase(data?.first_name) +
                       " " +
-                      uppercase(data?.name?.last)}
+                      uppercase(data?.last_name)}
                   </h5>
                   <p className="card-text">
-                    {data?.location?.city +
-                      ", " +
-                      uppercase(data?.location?.state)}
-                    <br />
-                    <span className="phone">{data?.phone}</span>
+               
+                    <span className="phone">{data?.phonenumber}</span>
                   </p>
                 </div>
               </div>

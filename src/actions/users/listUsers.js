@@ -14,11 +14,10 @@ export function fetchUsersFailuire() {
 
 export const fetchUsers = () => async (dispatch) => {
   dispatch(fetchUserssRequest());
-    try {
-      const res = await  axiosInstance.get();
-  
-      dispatch(fetchUsersSuccess(res?.data?.results));
-      
+  try {
+      const response = await  axiosInstance.get('auth/api/v1/users/');
+      console.log({response})
+      dispatch(fetchUsersSuccess(response?.data));
     } catch (err) {
 
       dispatch(fetchUsersFailuire());
@@ -27,6 +26,5 @@ export const fetchUsers = () => async (dispatch) => {
       } else if (err.request) {
         message.error(err.message);
       }
-      
-    }
+  }
 };

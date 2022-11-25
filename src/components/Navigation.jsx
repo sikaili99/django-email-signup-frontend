@@ -83,7 +83,7 @@ const Navigation = () => {
   };
 
   const handleLogout = () => {
-    dispatch(logoutAction(navigate));
+    dispatch(logoutAction(navigate,dispatch));
   };
 
   const menuId = 'primary-search-account-menu';

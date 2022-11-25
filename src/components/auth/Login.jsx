@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAction, authenticateAction } from '../../actions/auth/authActions';
 import CustomLoader from '../loader';
@@ -14,6 +14,7 @@ const Login = () => {
 
   const onSubmit = data => {
     dispatch(loginAction(data)).then(response => {
+      console.log({response});
       dispatch(authenticateAction(response.data,dispatch,location,navigate));
     })
 
@@ -26,17 +27,15 @@ const Login = () => {
             <h3 className="Auth-form-title">Sign In</h3>
             <div className="text-center">
               Not registered yet?{" "}
-              <span className="link-primary" >
-                Sign Up
-              </span>
+                <Link className="link-primary" to={'/register'}>Sign Up</Link>
             </div>
             <div className="form-group mt-3">
               <label>Email address</label>
               <input
-                {...register("phonenumber")}
+                {...register("email")}
                 type="text"
                 className="form-control mt-1"
-                placeholder="Enter email"
+                placeholder="Enter email address"
               />
             </div>
             <div className="form-group mt-3">

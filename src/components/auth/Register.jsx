@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import createUser from '../../actions/users/userCreate';
@@ -26,9 +26,7 @@ const Register = () => {
           <h3 className="Auth-form-title">Sign In</h3>
           <div className="text-center">
             Already registered?{" "}
-            <span className="link-primary">
-              Sign In
-            </span>
+            <Link className="link-primary" to={'/login'}>Sign In</Link>
           </div>
           <div className="form-group mt-3">
             <label>First Name</label>
@@ -45,7 +43,7 @@ const Register = () => {
               {...register("last_name")}
               type="text"
               className="form-control mt-1"
-              placeholder="Last"
+              placeholder="Last name"
             />
           </div>
           <div className="form-group mt-3">
@@ -60,19 +58,10 @@ const Register = () => {
           <div className="form-group mt-3">
             <label>Phone number</label>
             <input
-              {...register("phone_number")}
+              {...register("phonenumber")}
               type="text"
               className="form-control mt-1"
               placeholder="Phone number"
-            />
-          </div>
-          <div className="form-group mt-3">
-            <label>communities</label>
-            <input
-              {...register("communities")}
-              type="text"
-              className="form-control mt-1"
-              placeholder="communities"
             />
           </div>
           <div className="form-group mt-3">
@@ -81,7 +70,16 @@ const Register = () => {
               {...register("password")}
               type="password"
               className="form-control mt-1"
-              placeholder="Password"
+              placeholder="Enter password"
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label>Comfirm password</label>
+            <input
+              {...register("password2")}
+              type="password"
+              className="form-control mt-1"
+              placeholder="Enter comfirm password"
             />
           </div>
             <div className="d-grid gap-2 mt-3">
@@ -89,9 +87,9 @@ const Register = () => {
                 Submit
               </button>
             </div>
-          <p className="text-center mt-2">
-            Forgot <a href="#">password?</a>
-          </p>
+            <p className="text-center mt-2">
+              Forgot <Link>password?</Link>
+            </p>
         </div>
       </form>
      </CustomLoader>

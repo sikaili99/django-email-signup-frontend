@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+
 import {
   TextField,
   Grid,
@@ -7,6 +7,7 @@ import {
   Button,
   Paper
 } from "@material-ui/core";
+import useStyles from "../theme";
 
 var sampleAccount = {
   image: "https://i.kym-cdn.com/entries/icons/original/000/031/727/cover10.jpg",
@@ -17,26 +18,7 @@ var sampleAccount = {
   password: "password"
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 3
-  },
-  paper: {
-    padding: theme.spacing(4),
-    margin: "auto",
-    width: 500
-  },
-  image: {
-    width: 150,
-    height: 150
-  },
-  img: {
-    margin: "auto",
-    display: "block",
-    width: "100%",
-    height: "100%"
-  }
-}));
+
 
 function Account({ id }) {
   const classes = useStyles();
@@ -85,15 +67,14 @@ function PasswordMgmt({ id }) {
   const correctPW = "password";
 
   function validateNewPassword() {
-    var check =
-      currPassword === correctPW && newPassword === confirmNewPassword;
+    var check = currPassword === correctPW && newPassword === confirmNewPassword;
     console.log(check);
     setSubmittable(check);
   }
 
   return (
     <Paper className={classes.paper}>
-      <Grid container direction="column" spacing={4}>
+      <Grid container direction="column" spacing={8}>
         <Grid container justifyContent="flex-start">
           <Typography variant="h4">Password Mangement</Typography>
         </Grid>
@@ -135,19 +116,11 @@ function PasswordMgmt({ id }) {
   );
 }
 
-export default function Profile({ id = sampleAccount }) {
-  const [profileImg, setprofileImg] = useState(id.image);
-  const [name, setName] = useState(id.name);
-  const [email, setEmail] = useState(id.email);
-  const [edited, setEdited] = useState(false);
-  const classes = useStyles();
+export default function UserDetails({ id = sampleAccount }) {
   return (
     <Grid container direction="column" justifyContent="center" spacing={5}>
       <Grid item>
         <Account id={id} />
-      </Grid>
-      <Grid item>
-        <PasswordMgmt id={id} />
       </Grid>
     </Grid>
   );

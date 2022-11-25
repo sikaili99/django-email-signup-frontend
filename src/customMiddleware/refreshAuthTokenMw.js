@@ -4,6 +4,7 @@ import jwtDecode from "jwt-decode";
 import { backendUrl } from "../actions/backendUrl";
 
 import { history } from "../index.js";
+import { axiosInstance } from "../services";
 
 let url = process.env.REACT_APP_DEV_URL || backendUrl;
 
@@ -11,7 +12,6 @@ function refreshAuthToken({ dispatch, getState }) {
   return next => action => {
     if (typeof action === "function") {
       if (localStorage.getItem("access_token") && localStorage.length > 0) {
-        console.log("here....");
         const tokenExpiration = jwtDecode(localStorage.getItem("access_token"))
           .exp;
         const currentTime = Math.round(new Date().getTime() / 1000);
@@ -25,16 +25,8 @@ function refreshAuthToken({ dispatch, getState }) {
           return next(action);
         }
         if (tokenExpiration && timeLeft <= 1800) {
-          return fetch(`${url}/auth/v1/api/refresh/`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: loginToken
-            },
-            body: JSON.stringify({ token: loginToken })
-          })
-            .then(response => response.json())
-            .then(json => localStorage.setItem("access_token", json.token))
+          return axiosInstance.post('/auth/api/v1/token/refresh/')
+            .then(response => localStorage.setItem("access_token", response.data.access))
             .then(() => next(action));
         }
         return next(action);
