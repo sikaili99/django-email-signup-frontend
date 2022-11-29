@@ -57,7 +57,7 @@ const UserCards = () => {
             </div>
           ))}
         </div>
-        {!loading && <button
+        {users.length > 18 && <button
           className="btn btn-light btn-block w-50 mx-auto"
           onClick={e => {
             loadMore();
