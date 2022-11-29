@@ -151,7 +151,7 @@ const Navigation = () => {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            App
+            Sparco
           </IconButton>
           { checkAuth() && <Search>
             <SearchIconWrapper>
