@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserHistory } from "history"
 import { Provider } from "react-redux";
 import { store } from "./store";
-import App  from "./App";
+import App  from "./app";
 import "./styles.css";
 import "./login.css";
 
